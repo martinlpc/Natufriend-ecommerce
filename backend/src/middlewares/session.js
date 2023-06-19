@@ -22,7 +22,6 @@ export const isSessionActive = async (req, res, next) => {
  * @param minRequiredRole The minimum level of role required to continue with the request
 */
 export const checkRole = (minRequiredRole) => {
-
   return (req, res, next) => {
     if (req.session.login || req.session.user.role === Roles.ADMIN) {
       if (req.session.user.role < minRequiredRole) {

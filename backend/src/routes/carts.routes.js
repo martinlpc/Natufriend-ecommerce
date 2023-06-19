@@ -1,28 +1,26 @@
 import { Router } from "express";
 import { purchaseCart, getCart, addProduct, changeProductQuantity, clearCart, removeProduct, overwriteCart, createNewCart } from "../controllers/cart.controller.js";
-import { Roles, checkRole } from "../middlewares/session.js";
+import { Roles, checkRole, isSessionActive } from "../middlewares/session.js";
 
 const routerCart = Router()
 
-// Middleware to use in every cart related request
-routerCart.use(checkRole(Roles.USER))
+// Middlewares to use in every cart related request
+routerCart.use(isSessionActive, checkRole(Roles.USER))
 
 routerCart.route('/')
-    .post(createNewCart)
-    .get(getCart)
-    .put(overwriteCart)
-
-routerCart.route('/:cid')
-    .delete(clearCart)
+  .post(createNewCart)
+  .get(getCart)
+  .put(overwriteCart)
+  .delete(clearCart)
 
 routerCart.route('/product/:pid')
-    .post(addProduct)
+  .post(addProduct)
 
 routerCart.route('/:cid/product/:pid')
-    .put(changeProductQuantity)
-    .delete(removeProduct)
+  .put(changeProductQuantity)
+  .delete(removeProduct)
 
 routerCart.route('/purchase')
-    .post(purchaseCart)
+  .post(purchaseCart)
 
 export default routerCart

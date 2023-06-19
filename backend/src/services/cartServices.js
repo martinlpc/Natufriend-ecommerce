@@ -34,7 +34,7 @@ export const updateCart = async (id, info) => {
     }
 }
 
-export const changeProductQuantity = async (cartID, productID, newQty) => {
+export const updateProductQuantity = async (cartID, productID, newQty) => {
     try {
         const cart = await findCartById(cartID)
         if (!cart) {
@@ -66,6 +66,17 @@ export const removeFromCart = async (cartID, productID) => {
             await cart.save()
             return true
         }
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+export const removeAllFromCart = async (cartID) => {
+    try {
+        const cart = await findCartById(cartID)
+        cart.products = []
+        await cart.save()
+        return true
     } catch (error) {
         throw new Error(error)
     }

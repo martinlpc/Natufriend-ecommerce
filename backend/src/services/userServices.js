@@ -34,9 +34,17 @@ export const createUser = async (user) => {
   }
 }
 
-export const deleteUser = async (id) => {
+export const deleteUserById = async (id) => {
   try {
     return await userModel.findByIdAndDelete(id);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export const deleteUserByEmail = async (email) => {
+  try {
+    return await userModel.findOneAndDelete({ email: email })
   } catch (error) {
     throw new Error(error);
   }

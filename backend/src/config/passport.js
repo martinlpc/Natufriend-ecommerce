@@ -27,7 +27,7 @@ const initializePassport = () => {
             last_name: last_name,
             email: email,
             password: hashPassword,
-            role: "user",
+            role: 1,
             cart_id: newCart._id
           });
 
@@ -50,7 +50,7 @@ const initializePassport = () => {
             last_name: " ",
             email: process.env.ADMIN_EMAIL,
             password: " ", // Default password required by Challenge #5
-            role: "admin",
+            role: 2,
           };
           return done(null, user);
         }

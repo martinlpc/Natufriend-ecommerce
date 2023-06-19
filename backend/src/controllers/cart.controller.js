@@ -1,5 +1,5 @@
 import productModel from "../models/MongoDB/productModel.js"
-import { findCartById, updateCart, createCart, removeFromCart } from "../services/cartServices.js"
+import { findCartById, updateCart, createCart, removeFromCart, updateProductQuantity, removeAllFromCart } from "../services/cartServices.js"
 import { findProductById, updateProduct } from "../services/productServices.js"
 
 import { createTicket } from "../services/ticketServices.js"
@@ -45,7 +45,6 @@ export const createNewCart = async (req, res) => {
       status: "error",
       message: error.message
     })
-    //console.log(error)
   }
 }
 
@@ -65,7 +64,6 @@ export const addProduct = async (req, res) => {
         await cart.save()
         return res.status(201).send(`Product added to cart`)
       }
-
       return res.status(404).send(`Cannot add product (reason: not found)`)
     } catch (error) {
       res.status(500).send({
@@ -75,7 +73,6 @@ export const addProduct = async (req, res) => {
   } else {
     return res.status(401).send("No active session")
   }
-
 }
 
 export const overwriteCart = async (req, res) => {
@@ -86,7 +83,7 @@ export const overwriteCart = async (req, res) => {
 
       const response = await updateCart(cartID, productsToAdd)
 
-      res.status(200).send({
+      res.status(201).send({
         status: 'success',
         payload: response
       })
@@ -108,7 +105,7 @@ export const changeProductQuantity = async (req, res) => {
       const { quantity } = req.body
       const newQuantity = parseInt(quantity)
 
-      const updatedCart = await changeProductQuantity(req.params.cid, req.params.pid, newQuantity)
+      const updatedCart = await updateProductQuantity(req.params.cid, req.params.pid, newQuantity)
 
       res.status(200).send({
         status: "success",
@@ -143,14 +140,18 @@ export const removeProduct = async (req, res) => {
 }
 
 export const clearCart = async (req, res) => {
-  try {
-    const cart = await cartManager.emptyCart(req.params.cid)
-    res.status(200).send(`Cart id:${req.params.cid} is now empty`)
-  } catch (error) {
-    re.status(500).send({
-      status: "error",
-      message: error.message
-    })
+  if (req.session.login) {
+    try {
+      const cart = await removeAllFromCart(req.session.user.cart_id)
+      res.status(200).send(`Cart is now empty`)
+    } catch (error) {
+      res.status(500).send({
+        status: "error",
+        message: error.message
+      })
+    }
+  } else {
+    return res.status(401).send("No active session")
   }
 }
 
@@ -182,7 +183,8 @@ export const purchaseCart = async (req, res) => {
         let stockAfterPurchase = stockBeforePurchase - elem.quantity
         let productID = elem.productId._id
 
-        req.logger.debug(`[purchase] product: ${elem.productId.title}`)
+        req.logger.debug(`[purchase] -------------------------------------------`)
+        req.logger.debug(`[purchase] product: ${elem.productId.title} - unit price: ${elem.productId.price}`)
         req.logger.debug(`[purchase] stock before: ${stockBeforePurchase}`)
         req.logger.debug(`[purchase] selected quantity: ${elem.quantity}`)
         req.logger.debug(`[purchase] stock after: ${stockAfterPurchase}`)

@@ -21,7 +21,7 @@ export const registerUser = async (req, res, next) => {
         return res.status(401).send('Email already in use')
       }
       req.logger.info(`User registered`)
-      return res.status(200).send('User succesfully registered')
+      return res.status(201).send('User succesfully registered')
     })(req, res, next)
   } catch (error) {
     req.logger.error(`Error in register procedure - ${error.message}`)
@@ -192,11 +192,9 @@ export const destroySession = async (req, res) => {
 export const getSession = async (req, res) => {
   try {
     if (req.session.login) {
-      req.logger.debug(req.session.user)
       res.status(200).json(req.session.user);
     } else {
-      req.logger.debug('No active session')
-      return res.status(401).send(`No active session found`)
+      return res.status(404).send(`No active session found`)
     }
   } catch (error) {
     res.status(500).send({
