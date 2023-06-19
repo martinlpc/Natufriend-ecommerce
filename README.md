@@ -12,6 +12,11 @@ Sitio e-commerce de productos naturales para mascotas.
 
 Los endpoints y su funcionalidad se visualizan en la ruta /apidocs una vez lanzado el server.
 
+### Testing:
+
+En terminal #1: en /backend correr el comando `npm run testing` para lanzar el sv en modo TESTING
+
+En terminal #2: en /backend correr el comando `npm run supertest` para ejecutar el test integral de session/cart/products
   
 ## Dependencias utilizadas:
 
