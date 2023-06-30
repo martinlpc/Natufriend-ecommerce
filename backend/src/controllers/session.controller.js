@@ -34,7 +34,7 @@ export const registerUser = async (req, res, next) => {
 
 export const loginUser = async (req, res, next) => {
   try {
-    passport.authenticate('login', (err, user) => {
+    passport.authenticate('login', async (err, user) => {
       if (err) {
         req.logger.error(`Login error - ${err.message}`)
         return res.status(401).send({
@@ -48,6 +48,9 @@ export const loginUser = async (req, res, next) => {
       }
       req.session.login = true
       req.session.user = user
+
+      // Register login date & time
+      await updateUser(req.session.user._id, { last_connection: new Date() })
 
       req.logger.info(`User logged in < ${req.session.user.email} >`)
 
@@ -173,6 +176,10 @@ export const resetPassword = async (req, res, next) => {
 export const destroySession = async (req, res) => {
   try {
     if (req.session.login) {
+
+      // Register last login date & time
+      await updateUser(req.session.user._id, { last_connection: new Date() })
+
       const username = req.session.user.first_name
       req.session.destroy()
       req.logger.info(`${username} logged out`)
