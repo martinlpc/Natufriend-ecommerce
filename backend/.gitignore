@@ -3,4 +3,3 @@ node_modules
 src/errors.log
 .eslint*
 Dockerfile
-src/public
