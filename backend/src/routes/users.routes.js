@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { deleteUser, getUsers } from "../controllers/user.controller.js";
+import { deleteUser, getUsers, uploadDocs } from "../controllers/user.controller.js";
 import { Roles, checkRole, isSessionActive } from "../middlewares/session.js";
+import { uploader } from "../utils/multer.js";
 
 const routerUser = Router()
-routerUser.use(isSessionActive, checkRole(Roles.ADMIN))
 
-routerUser.get('/', getUsers)
-routerUser.delete('/', deleteUser)
+routerUser.get('/', isSessionActive, checkRole(Roles.ADMIN), getUsers)
+routerUser.delete('/', isSessionActive, checkRole(Roles.ADMIN), deleteUser)
+routerUser.post('/:uid/documents', isSessionActive, uploader.single('file'), uploadDocs)
 
 export default routerUser

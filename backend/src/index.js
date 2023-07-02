@@ -2,7 +2,6 @@
 import './config/config.js'
 import router from './routes/index.routes.js'
 import express from 'express'
-//import multer from 'multer'
 import { engine } from 'express-handlebars'
 import { __dirname } from "./path.js";
 import * as path from 'path'
@@ -23,9 +22,9 @@ import swaggerUiExpress from 'swagger-ui-express'
 const app = express()
 
 /*
-  ***********
-  Middlewares
-  ***********
+***********
+Middlewares
+***********
 */
 
 // * Express, Winston Logger and Session
@@ -94,19 +93,9 @@ export const transporter = nodemailer.createTransport({
   }
 });
 
+
 // ERROR HANDLER (LAST MIDDLEWARE TO USE)
 app.use(errorHandler)
-
-// Multer settings
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, 'src/public/img')
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, `${Date.now()}${file.originalname}`)
-//     }
-// })
-// const upload = multer({ storage: storage })
 
 const connectToMongoDB = async () => {
   await mongoose.connect(process.env.MONGO_URL, {
