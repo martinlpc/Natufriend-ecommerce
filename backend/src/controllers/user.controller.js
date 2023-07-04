@@ -44,21 +44,24 @@ export const uploadDocs = async (req, res, next) => {
       reference: files.path
     }
 
-    await updateUser(
+    const isInfoUpdated = await updateUser(
       userID,
-      { $push: { documents: { ...newDocsItem } } }
+      { $push: { documents: newDocsItem } }
     )
 
+    req.logger.debug(isInfoUpdated)
+
     req.logger.info(`
-    <UPLOAD> 
-    user id: ${userID}
-    file name: ${files.originalname}
-    file type: ${files.mimetype}
-    file size: ${files.size}
-    file path: ${files.path}
+    <UPLOAD>
+    user email: ${req.session.user.email} 
+    user id:    ${userID}
+    file name:  ${files.originalname}
+    file type:  ${files.mimetype}
+    file size:  ${files.size}
+    file path:  ${files.path}
     -------------------------END------------------------`)
 
-    res.status(201).send('File uploaded succesfully')
+    res.status(201).send(`File '${files.originalname}' uploaded succesfully by '${req.session.user.email}'`)
 
   } catch (error) {
     res.status(500).send(error)
