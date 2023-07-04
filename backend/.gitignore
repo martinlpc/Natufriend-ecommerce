@@ -4,3 +4,4 @@ src/errors.log
 .eslint*
 Dockerfile
 src/public/uploads/*/*
+src/views
