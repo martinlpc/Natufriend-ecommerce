@@ -41,5 +41,11 @@ Instalación completa con el comando `npm i`
 - swagger-jsdoc
 - swagger-ui-express
 - winston
+- multer
+
+devDependencies:
 - @faker-js/faker
 - nodemon
+- chai
+- mocha
+- supertest
