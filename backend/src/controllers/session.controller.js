@@ -50,7 +50,7 @@ export const loginUser = async (req, res, next) => {
       req.session.user = user
 
       // Register login date & time
-      await updateUser(req.session.user._id, { last_connection: new Date() })
+      req.session.user.role === 1 && await updateUser(req.session.user._id, { last_connection: new Date() })
 
       req.logger.info(`User logged in < ${req.session.user.email} >`)
 
@@ -178,7 +178,7 @@ export const destroySession = async (req, res) => {
     if (req.session.login) {
 
       // Register last login date & time
-      await updateUser(req.session.user._id, { last_connection: new Date() })
+      req.session.user.role === 1 && await updateUser(req.session.user._id, { last_connection: new Date() })
 
       const username = req.session.user.first_name
       req.session.destroy()

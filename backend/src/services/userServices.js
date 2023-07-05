@@ -2,7 +2,7 @@ import userModel from '../models/MongoDB/userModel.js';
 
 export const findUsers = async () => {
   try {
-    return await userModel.find();
+    return await userModel.find().select('-_id first_name last_name email role');
   } catch (error) {
     throw new Error(error);
   }
