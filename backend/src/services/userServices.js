@@ -18,10 +18,26 @@ export const findUserById = async (id) => {
 
 export const findUserByEmail = async (email) => {
   try {
-    const user = await userModel.findOne({ email: email });
-    return user
+    return await userModel.findOne({ email: email });
   } catch (error) {
     throw new Error(error);
+  }
+}
+
+export const findInactiveUsers = async (dateTimeLimit) => {
+  try {
+    const users = await userModel.find({ last_connection: { $lt: dateTimeLimit } })
+    return users
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export const deleteInactiveUsers = async (dateTimeLimit) => {
+  try {
+    return await userModel.deleteMany({ last_connection: { $lt: dateTimeLimit } })
+  } catch (error) {
+    throw new Error(error)
   }
 }
 
