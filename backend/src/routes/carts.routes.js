@@ -15,8 +15,6 @@ routerCart.route('/')
 
 routerCart.route('/product/:pid')
   .post(addProduct)
-
-routerCart.route('/:cid/product/:pid')
   .put(changeProductQuantity)
   .delete(removeProduct)
 

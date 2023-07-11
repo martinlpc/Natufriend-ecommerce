@@ -28,7 +28,8 @@ export const deleteCart = async (id) => {
 
 export const updateCart = async (id, info) => {
     try {
-        return await cartModel.findByIdAndUpdate(id, info);
+        return await cartModel.findByIdAndUpdate(id, info, { new: true });
+
     } catch (error) {
         throw new Error(error);
     }
@@ -64,7 +65,7 @@ export const removeFromCart = async (cartID, productID) => {
         } else {
             cart.products.splice(productIndex, 1)
             await cart.save()
-            return true
+            return cart
         }
     } catch (error) {
         throw new Error(error)

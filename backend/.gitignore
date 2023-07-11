@@ -1,6 +1,6 @@
 node_modules
 .env*
-src/errors.log
+errors.log
 .eslint*
 Dockerfile
 src/public/uploads/*/*
