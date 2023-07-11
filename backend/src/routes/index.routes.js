@@ -21,7 +21,7 @@ router.use('/api/session', routerSession)
 router.use('/api/users', routerUser)
 router.use('/api/chat', routerChat)
 router.use('/authSession', routerGithub)
-router.use('/', routerViews)
+//router.use('/', routerViews)
 
 // Temporal endpoint to create 100 random products
 router.get('/mockingproducts', getRandomProducts)

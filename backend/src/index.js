@@ -2,7 +2,6 @@
 import './config/config.js'
 import router from './routes/index.routes.js'
 import express from 'express'
-import { engine } from 'express-handlebars'
 import { __dirname } from "./path.js";
 import * as path from 'path'
 import mongoose from 'mongoose';
@@ -18,6 +17,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { log, middlewareLogger } from './middlewares/logger.js';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUiExpress from 'swagger-ui-express'
+import cors from 'cors'
 
 const app = express()
 
@@ -26,6 +26,21 @@ const app = express()
 Middlewares
 ***********
 */
+
+// * CORS config
+const whiteList = [
+  "http://localhost:3000",
+  "http://localhost:8080"
+]
+const corsOpts = {
+  origin: function (origin, callback) {
+    (whiteList.indexOf(origin) !== -1 || !origin)
+      ? callback(null, true)
+      : callback(new Error('Not allowed by CORS policy'))
+  },
+  credentials: true
+}
+app.use(cors(corsOpts))
 
 // * Express, Winston Logger and Session
 app.use(express.json())
@@ -43,6 +58,8 @@ app.use(session({
   saveUninitialized: false,
   rolling: false
 }))
+
+
 
 // * Swagger API documentation
 const swaggerOpts = {
@@ -65,9 +82,9 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // * Handlebars as template engine
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
-app.set('views', path.resolve(__dirname, './views'))
+// app.engine('handlebars', engine());
+// app.set('view engine', 'handlebars');
+// app.set('views', path.resolve(__dirname, './views'))
 
 // * Port setting
 app.set("port", process.env.PORT)
@@ -114,7 +131,9 @@ const server = app.listen(app.get("port"), () => {
 })
 
 // Socket server for chat service
-export const chatServer = new SocketServer(server)
+export const chatServer = new SocketServer(server, {
+  cors: { corsOpts }
+})
 log('info', `Chat server online`)
 chatServer.on("connection", async (socket) => {
   log('info', "Connection to chat detected")

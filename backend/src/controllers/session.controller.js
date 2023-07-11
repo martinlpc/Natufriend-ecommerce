@@ -44,7 +44,10 @@ export const loginUser = async (req, res, next) => {
       }
       if (!user) {
         req.logger.info(`Login error - wrong credentials`)
-        return res.status(401).send(`Wrong credentials`)
+        return res.status(401).send({
+          status: 'unauthorized',
+          message: 'Wrong credentials'
+        })
       }
       req.session.login = true
       req.session.user = user
@@ -54,7 +57,7 @@ export const loginUser = async (req, res, next) => {
 
       req.logger.info(`User logged in < ${req.session.user.email} >`)
 
-      return res.status(200).send(`Welcome ${req.session.user.first_name}`)
+      return res.status(200).send(req.session.user)
     })(req, res, next)
   } catch (error) {
     req.logger.error(`Error in log-in procedure - ${error.message}`)
@@ -183,7 +186,10 @@ export const destroySession = async (req, res) => {
       const username = req.session.user.first_name
       req.session.destroy()
       req.logger.info(`${username} logged out`)
-      res.status(200).send(`Session "${username}" terminated.`)
+      res.status(200).send({
+        status: 'success',
+        message: `${username} logged out`
+      })
     } else {
       req.logger.debug('No active session')
       return res.status(401).send(`No active session found`)
@@ -201,7 +207,7 @@ export const getSession = async (req, res) => {
     if (req.session.login) {
       res.status(200).json(req.session.user);
     } else {
-      return res.status(404).send(`No active session found`)
+      return res.status(401).send(`No active session found`)
     }
   } catch (error) {
     res.status(500).send({
