@@ -22,8 +22,7 @@ const CartWidget = () => {
                 ) : (
                     <>
                         {cart.map((item) => (
-                            <CartWidgetItem item={item} key={item.id} />
-                            // Paso key para evitar el warning de DevTools
+                            <CartWidgetItem item={item} key={item._id} />
                         ))}
 
                         <CartWidgetActions />

@@ -1,12 +1,12 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const CartItem = ({ item, removeItemById }) => {
     return (
-        <article className="cart-item" key={item.id}>
-            <Link to={"/item/" + item.id}>
-                <img src={item.img} className="checkout-item-img" alt={item.title} />
+        <article className="cart-item" key={item._id}>
+            <Link to={'/item/' + item._id}>
+                <img src={item.thumbnails[0]} className="checkout-item-img" alt={item.title} />
             </Link>
             <div className="cart-item-detail">
                 <span>
@@ -16,15 +16,15 @@ const CartItem = ({ item, removeItemById }) => {
                 <small>Cantidad: {item.qty}</small>
                 <small>Subtotal: $ {item.qty * item.price}</small>
             </div>
-            <div className="cart-item-remove">
+            <button className="btn btn-danger">
                 <FontAwesomeIcon
-                    color="red"
+                    color="white"
                     icon={faTrashCan}
                     onClick={() => {
-                        removeItemById(item.id);
+                        removeItemById(item._id);
                     }}
                 />
-            </div>
+            </button>
         </article>
     );
 };

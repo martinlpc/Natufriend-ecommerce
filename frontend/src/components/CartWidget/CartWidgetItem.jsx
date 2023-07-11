@@ -1,16 +1,16 @@
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext } from "react";
-import { Link } from "react-router-dom";
-import { CartContext } from "../../context/CartContext";
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { CartContext } from '../../context/CartContext';
 
 export const CartWidgetItem = ({ item }) => {
     const { removeItemById } = useContext(CartContext);
 
     return (
-        <span className="cart-item" key={item.id}>
-            <Link to={"/item/" + item.id}>
-                <img src={item.img} className="cart-item-img" alt={item.title} />
+        <span className="cart-item" key={item._id}>
+            <Link to={'/item/' + item._id}>
+                <img src={item.thumbnails[0]} className="cart-item-img" alt={item.title} />
             </Link>
             <div className="cart-item-detail">
                 <span>
@@ -21,13 +21,15 @@ export const CartWidgetItem = ({ item }) => {
                 <small>Subtotal: $ {item.qty * item.price}</small>
             </div>
             <div className="cart-item-remove">
-                <FontAwesomeIcon
-                    color="red"
-                    icon={faTrashCan}
-                    onClick={() => {
-                        removeItemById(item.id);
-                    }}
-                />
+                <button className="btn btn-danger">
+                    <FontAwesomeIcon
+                        color="white"
+                        icon={faTrashCan}
+                        onClick={() => {
+                            removeItemById(item._id);
+                        }}
+                    />
+                </button>
             </div>
         </span>
     );

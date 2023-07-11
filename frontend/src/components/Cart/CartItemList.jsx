@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { CartContext } from "../../context/CartContext";
-import CartItem from "./CartItem";
+import { useContext } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { CartContext } from '../../context/CartContext';
+import CartItem from './CartItem';
 
 const CartItemList = () => {
     const { cart, removeItemById, totalPrice } = useContext(CartContext);
@@ -13,7 +13,7 @@ const CartItemList = () => {
             <Container as="section" className="cart-item-list-container container align-center">
                 {cart &&
                     cart.map((prod) => {
-                        return <CartItem key={prod.id} item={prod} removeItemById={removeItemById} />;
+                        return <CartItem key={prod._id} item={prod} removeItemById={removeItemById} />;
                     })}
             </Container>
             <Container fluid={true} as="section" className="cart-item-list_total d-flex justify-content-center align-content-center">
@@ -28,8 +28,8 @@ const CartItemList = () => {
                                 Tu carrito está vacío 🐶🐱
                             </Col>
 
-                            <Link className="col-12 text-center" to={"/"}>
-                                <Button variant="success">Ir al inicio</Button>
+                            <Link className="col-12 text-center" to={'/'}>
+                                <p className="mt-2">Ir al inicio</p>
                             </Link>
                         </Row>
                     </>
