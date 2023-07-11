@@ -62,6 +62,23 @@ export const logout = async () => {
   }
 }
 
+export const register = async (first_name, last_name, email, password) => {
+
+  try {
+    const response = await fetch(`${SESSION_API}/register`, {
+      method: 'POST',
+      headers: HEADERS,
+      body: JSON.stringify({ first_name, last_name, email, password })
+    })
+    if (response.status === 201) {
+      return true
+    }
+    return false
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export const sendRecoveryEmail = async (options) => {
   try {
     const response = await fetch(`${SESSION_API}/password/createlink`, options)

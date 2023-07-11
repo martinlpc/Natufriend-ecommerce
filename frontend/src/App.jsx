@@ -16,7 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/App.css';
 // React Hooks
 import ResetPassword from './components/ResetPassword/ResetPassword';
-import Register from './pages/Register';
+import RegisterForm from './pages/RegisterContainer';
 
 const App = () => {
     return (
@@ -31,7 +31,7 @@ const App = () => {
                         <Route exact path="/item/:id" element={<ItemDetailContainer />} />
                         <Route exact path="/forgotpassword" element={<ForgotPassword />} />
                         <Route exact path="/resetpassword" element={<ResetPassword />} />
-                        <Route exact path="/register" element={<Register />} />
+                        <Route exact path="/register" element={<RegisterForm />} />
                     </Routes>
                     <Footer />
                 </div>

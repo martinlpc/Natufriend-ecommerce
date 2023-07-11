@@ -6,14 +6,12 @@ import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 const LoginContainer = () => {
     return (
-        <main className="d-flex justify-content-center">
+        <main className="d-flex justify-content-center pt-2">
             <div className="login-container justify-content-center">
-                <h2>Iniciá sesión</h2>
+                <h2 className="text-center">Iniciá sesión</h2>
                 <LoginForm />
                 <Link className="d-flex justify-content-center" to="/register">
-                    <button className="m-1 btn btn-primary">
-                        <FontAwesomeIcon icon={faUserPlus} /> Registrarse
-                    </button>
+                    Crear nuevo usuario
                 </Link>
             </div>
         </main>
