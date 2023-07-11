@@ -1,6 +1,6 @@
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { register } from '../../queries/Session';
 
@@ -25,7 +25,7 @@ export default function RegisterForm() {
             setRegistered(false);
             setError(true);
         } catch (error) {
-            // error logic
+            setError(true);
         }
     };
     return (
