@@ -1,21 +1,19 @@
-import "../queries/Orders";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row } from 'react-bootstrap';
 
-import { useContext, useState } from "react";
-import { CartContext } from "../context/CartContext";
+import { useContext, useState } from 'react';
+import { CartContext } from '../context/CartContext';
 
-import { OrderConfirm } from "../components/Order/OrderConfirm";
-import { CheckoutContainer } from "../components/CheckoutContainer";
-import { useEffect } from "react";
+import { OrderConfirm } from '../components/Order/OrderConfirm';
+import { CheckoutContainer } from '../components/CheckoutContainer';
+import { useEffect } from 'react';
 
 export const Checkout = () => {
-    const { orderId } = useContext(CartContext);
-
+    const { ticket } = useContext(CartContext);
     const [order, setOrder] = useState();
 
     useEffect(() => {
-        setOrder(orderId);
-    }, [orderId]);
+        setOrder(ticket);
+    }, [ticket]);
 
     return (
         <main>
@@ -24,7 +22,7 @@ export const Checkout = () => {
             </div>
 
             <Container>
-                <Row>{!order ? <CheckoutContainer /> : <OrderConfirm orderId={orderId} />}</Row>
+                <Row>{!order ? <CheckoutContainer /> : <OrderConfirm order={order} />}</Row>
             </Container>
         </main>
     );

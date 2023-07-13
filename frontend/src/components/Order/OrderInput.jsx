@@ -1,6 +1,6 @@
-import { Form } from "react-bootstrap";
+import { Form } from 'react-bootstrap';
 
-const OrderInput = ({ inputState, setInputState, type, label, placeholder, maxLength, onKeyDown, onKeyUp, inputFunction }) => {
+const OrderInput = ({ initialValue, inputState, setInputState, type, label, placeholder, maxLength, onKeyDown, onKeyUp, inputFunction }) => {
     const handleChange = (e) => {
         setInputState(e.target.value);
     };
@@ -22,6 +22,7 @@ const OrderInput = ({ inputState, setInputState, type, label, placeholder, maxLe
                 placeholder={placeholder}
                 value={inputState}
                 maxLength={maxLength}
+                defaultValue={initialValue}
             />
             <Form.Control.Feedback type="invalid">Este campo es requerido</Form.Control.Feedback>
         </Form.Group>

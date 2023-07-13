@@ -1,9 +1,8 @@
 //import { getFirestore } from "firebase/firestore";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
 import { CartContext } from '../../context/CartContext';
-import { setOrder } from '../../queries/Orders';
 import OrderInput from './OrderInput';
 
 export const OrderForm = () => {
@@ -17,7 +16,7 @@ export const OrderForm = () => {
     const [emailCheck, setEmailCheck] = useState('');
 
     // Utiliza CartContext para generar la orden con los productos
-    const { cart, totalPrice, setOrderId } = useContext(CartContext);
+    const { buyCart } = useContext(CartContext);
 
     const handleOnKeyDownTel = (event) => {
         const input = event.key;
@@ -45,33 +44,28 @@ export const OrderForm = () => {
         event.preventDefault();
         event.stopPropagation();
 
-        const orderProds = cart.map((prod) => ({
-            product_id: prod.id,
-            product_name: prod.title,
-            product_price: prod.price,
-            product_qty: prod.qty,
-            product_text: prod.text,
-        }));
-
-        const order = {
-            name: name,
-            email: email,
-            tel: tel,
-            total_price: totalPrice,
-            products: orderProds,
-            status: 'generada',
-        };
-
-        //const db = getFirestore();
-        //const orderIdFromFB = await setOrder(db, order);
-        //setOrderId(orderIdFromFB);
+        await buyCart();
     };
+
+    useEffect(() => {
+        const fullName = `${JSON.parse(localStorage.getItem('user')).first_name} ${JSON.parse(localStorage.getItem('user')).last_name}`;
+        const userEmail = `${JSON.parse(localStorage.getItem('user')).email}`;
+        setName(fullName);
+        setEmail(userEmail);
+    }, []);
 
     return (
         <Col xs={12} lg={4}>
-            <h2 className="card-title mb-3">Generá tu orden</h2>
+            <h2 className="card-title mb-3">Generá tu compra</h2>
             <Form validated={validated} onSubmit={handleSubmit}>
-                <OrderInput inputState={name} setInputState={setName} type="text" label="Nombre y apellido" placeholder="Ingresa tu nombre y apellido" />
+                <OrderInput
+                    inputState={name}
+                    setInputState={setName}
+                    type="text"
+                    label="Nombre y apellido"
+                    placeholder="Ingresa tu nombre y apellido"
+                    initialValue={name}
+                />
 
                 <OrderInput
                     inputState={tel}
@@ -84,7 +78,7 @@ export const OrderForm = () => {
                     onKeyUp={handleOnKeyUpTel}
                 />
 
-                <OrderInput inputState={email} setInputState={setEmail} type="email" label="Email" placeholder="correo@dominio.com" />
+                <OrderInput inputState={email} setInputState={setEmail} type="email" label="Email" placeholder="correo@dominio.com" initialValue={email} />
 
                 <OrderInput
                     inputState={emailCheck}
