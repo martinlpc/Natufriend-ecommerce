@@ -23,7 +23,6 @@ export const getProducts = async (limit, page, category, stock, sort) => {
 export const getProductById = async (id) => {
     try {
         const query = `${PRODUCTS_API}/${id}`
-        console.log('query: ' + query);
         const response = await fetch(query)
         if (response.ok) {
             return await response.json()
