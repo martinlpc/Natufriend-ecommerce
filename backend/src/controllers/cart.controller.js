@@ -171,12 +171,14 @@ export const purchaseCart = async (req, res) => {
       const populatedCart = await cart.populate({
         path: "products.productId", model: productModel
       })
+
       const products = populatedCart.products
       if (!products.length) {
         throw new Error(`Cart empty, unable to continue with the purchase`)
       }
 
       let totalAmount = 0
+
       products.forEach(elem => {
         let stockBeforePurchase = parseInt(elem.productId.stock)
         let stockAfterPurchase = stockBeforePurchase - elem.quantity
@@ -201,7 +203,7 @@ export const purchaseCart = async (req, res) => {
         }
 
       })
-      req.logger.debug(`[purchase] total amount: $ ${totalAmount}`)
+      req.logger.debug(`[purchase] ------ TOTAL: $ ${totalAmount} ------`)
 
       if (totalAmount <= 0) {
 

@@ -14,8 +14,8 @@ const cartSchema = new Schema({
             }
         }],
         default: []
-    }
-})
+    },
+}, { versionKey: false })
 
 const cartModel = model("carts", cartSchema)
 

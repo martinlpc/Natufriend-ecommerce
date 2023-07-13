@@ -58,7 +58,7 @@ export const updateProductQuantity = async (cartID, productID, newQty) => {
 export const removeFromCart = async (cartID, productID) => {
     try {
         const cart = await findCartById(cartID)
-        const productIndex = cart.products.findIndex(product => product.productId.equals(productID))
+        const productIndex = cart.products.findIndex(product => product.productId._id.equals(productID))
 
         if (productIndex === -1) {
             throw new Error(`Product not found in the specified cart`)
