@@ -17,8 +17,8 @@ export const CartWidgetItem = ({ item }) => {
                     <b>{item.title}</b>
                 </span>
                 <small>Precio unitario: $ {item.price}</small>
-                <small>Cantidad: {item.qty}</small>
-                <small>Subtotal: $ {item.qty * item.price}</small>
+                <small>Cantidad: {item.quantity}</small>
+                <small>Subtotal: $ {item.quantity * item.price}</small>
             </div>
             <div className="cart-item-remove">
                 <button className="btn btn-danger">

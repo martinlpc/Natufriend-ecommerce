@@ -38,7 +38,7 @@ export async function clearCart() {
 }
 
 /** 
- * @description Request to carts API endpoint to increase add a product to the current session cart.
+ * @description Request to carts API endpoint to add a product to the current session cart.
  * If the product already exists, its quantity is increased by 1 unit.
  * The cart is obtained from the current session.
 @param productID Product's ID to be modified

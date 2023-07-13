@@ -13,8 +13,8 @@ const CartItem = ({ item, removeItemById }) => {
                     <b>{item.title}</b>
                 </span>
                 <small>Precio unitario: $ {item.price}</small>
-                <small>Cantidad: {item.qty}</small>
-                <small>Subtotal: $ {item.qty * item.price}</small>
+                <small>Cantidad: {item.quantity}</small>
+                <small>Subtotal: $ {item.quantity * item.price}</small>
             </div>
             <button className="btn btn-danger">
                 <FontAwesomeIcon

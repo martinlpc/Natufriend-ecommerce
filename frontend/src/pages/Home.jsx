@@ -2,7 +2,7 @@ import LoginContainer from './LoginContainer';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
-import { login, getCurrentSession } from '../queries/Session';
+import { getCurrentSession } from '../queries/Session';
 
 export const Home = () => {
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ export const Home = () => {
                 navigate('/products');
             }
         } catch (error) {
-            // errors
+            console.error('Error checking session: ', error);
         }
     };
 
