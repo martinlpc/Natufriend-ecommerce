@@ -4,9 +4,11 @@ import { UserContext } from '../../context/UserContext';
 import { login } from '../../queries/Session';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { CartContext } from '../../context/CartContext';
 
 const LoginForm = () => {
     const { setUser } = useContext(UserContext);
+    const { fetchCart } = useContext(CartContext);
     const navigate = useNavigate();
 
     const [loginError, setLoginError] = useState(false);
@@ -20,6 +22,7 @@ const LoginForm = () => {
 
             if (userData) {
                 setUser(userData);
+                fetchCart();
                 setLoginError(false);
                 navigate('/products');
                 return;
