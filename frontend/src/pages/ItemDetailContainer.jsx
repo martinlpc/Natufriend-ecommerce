@@ -11,7 +11,6 @@ const ItemDetailContainer = () => {
     const fetchProduct = async (id) => {
         try {
             const response = await getProductById(id);
-            console.log(response);
             if (response) {
                 setLoading(false);
                 setProd(response);

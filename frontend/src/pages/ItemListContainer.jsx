@@ -43,7 +43,7 @@ const ItemListContainer = () => {
         <main className="ItemListContainer">
             <div className="Title-itemListContainer mt-2">
                 {params.category === undefined ? (
-                    <h1>Estos son todos nuestros productos</h1>
+                    <h1>Todos los productos</h1>
                 ) : (
                     <h1>
                         Viendo la categoría <b>{params.category}</b>
