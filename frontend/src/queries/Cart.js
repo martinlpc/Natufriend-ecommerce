@@ -95,7 +95,7 @@ export async function overwriteCart(newCartContent) {
 export async function changeProductQuantity(productID, newQty) {
   try {
     const cart = await fetch(`${CART_API}/product/${productID}`, {
-      method: 'POST',
+      method: 'PUT',
       credentials: 'include',
       headers: HEADERS,
       body: JSON.stringify({ quantity: parseInt(newQty) })
@@ -132,8 +132,13 @@ export async function purchaseCart() {
       credentials: 'include',
       headers: HEADERS
     })
+    const ticket = await response.json()
+
     if (response.status === 201) {
-      return response.invoice
+      return ticket.invoice
+    }
+    if (response.status === 200) {
+      return undefined
     }
     return null
   } catch (error) {
