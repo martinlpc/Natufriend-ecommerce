@@ -127,7 +127,7 @@ connectToMongoDB()
 
 // Server launch
 const server = app.listen(app.get("port"), () => {
-  log('info', `Server running on http://localhost:${app.get("port")}`)
+  log('info', `Server running on port ${app.get("port")}`)
 })
 
 // Socket server for chat service
