@@ -1,4 +1,4 @@
-import { Card, Placeholder, Row } from 'react-bootstrap';
+import { Card, Placeholder } from 'react-bootstrap';
 import { Tadpole } from 'react-svg-spinners';
 
 const ItemPlaceholder = () => {

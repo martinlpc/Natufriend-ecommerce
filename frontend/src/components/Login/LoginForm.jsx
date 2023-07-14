@@ -1,4 +1,4 @@
-import { useRef, useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { login } from '../../queries/Session';
